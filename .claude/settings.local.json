@@ -30,7 +30,8 @@
       "Bash(npx tsc *)",
       "Bash(npm run *)",
       "Bash(npx eslint *)",
-      "Bash(npx vitest *)"
+      "Bash(npx vitest *)",
+      "Bash(npx husky *)"
     ]
   }
 }
