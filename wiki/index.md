@@ -14,6 +14,7 @@ updated: 2026-05-11
 - [[entities/obsidian]] — ローカルmarkdownノートアプリ。AI第二脳のフロントエンド（2ソース）
 - [[entities/claude-code]] — Anthropic の AI CLI。Wiki の書き手・管理者（1ソース）
 - [[entities/nick-spisak]] — AI実装の実践家。Karpathy方式の実践ガイド著者（1ソース）
+- [[entities/hiroshi-takizawa]] — このWikiのオーナー。作業スタイル・好み・進行プロジェクトを記録（1ソース）
 
 ---
 
@@ -31,6 +32,7 @@ updated: 2026-05-11
 - [[sources/karpathy-llm-knowledge-base]] — Karpathy Gist: LLM型知識ベースの設計原則
 - [[sources/aiedge-claude-obsidian-guide]] — aiedge記事: Claude Code + Obsidian 実践ガイド
 - [[sources/nick-spisak-second-brain]] — Nick Spisak: 8ステップ実践ガイド（agent-browser・ヘルスチェック追加）
+- [[sources/hiroshi-memory]] — Hiroshi の作業記憶・好み・決定事項・進行プロジェクト
 
 ---
 
@@ -40,4 +42,4 @@ updated: 2026-05-11
 
 ---
 
-*総ページ数: 11 | 最終更新: 2026-05-11*
+*総ページ数: 13 | 最終更新: 2026-05-11*

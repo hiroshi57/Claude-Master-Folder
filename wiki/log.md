@@ -32,6 +32,17 @@
 
 ---
 
+## [2026-05-11] ingest | Hiroshi Memory（作業記憶・決定事項）
+- **ソース**: `raw/hiroshi-memory.md`
+- **概要**: Hiroshi Takizawa の好み・訂正・重要な決定事項・進行中プロジェクトを記録したメモリファイル。
+- **作成ページ**:
+  - `wiki/sources/hiroshi-memory.md`（新規）
+  - `wiki/entities/hiroshi-takizawa.md`（新規）
+- **更新ページ**:
+  - `wiki/index.md`（更新）
+
+---
+
 ## [2026-05-11] ingest | Nick Spisak — How to Build Your Second Brain
 - **ソース**: `raw/nick-spisak-second-brain.md`
 - **概要**: @NickSpisak_ によるKarpathy方式の8ステップ実践ガイド。agent-browser（Vercel Labs CLI）による raw/ 自動収集、月次ヘルスチェック、outputs/ フォルダの運用を追加。@HFloydの「エラー複利警告」も収録。
