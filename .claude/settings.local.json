@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh repo *)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(gh api *)",
+      "Bash(python -c \"import json,sys; [print\\(f['name']\\) for f in json.load\\(sys.stdin\\)]\")",
+      "Bash(python -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")",
+      "Bash(python -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); content=base64.b64decode\\(d['content']\\).decode\\('utf-8'\\); sys.stdout.buffer.write\\(content[:3000].encode\\('utf-8'\\)\\)\")",
+      "Bash(python -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); content=base64.b64decode\\(d['content']\\).decode\\('utf-8'\\); sys.stdout.buffer.write\\(content.encode\\('utf-8'\\)\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import anthropic; help\\(anthropic.DefaultHttpxClient\\)\")",
+      "Bash(python -c \"import anthropic; print\\(dir\\(anthropic\\)\\)\")",
+      "Bash(python -c \"import anthropic; print\\([x for x in dir\\(anthropic\\) if 'fed' in x.lower\\(\\) or 'wif' in x.lower\\(\\) or 'oidc' in x.lower\\(\\) or 'token' in x.lower\\(\\) or 'workload' in x.lower\\(\\)]\\)\")",
+      "Bash(python -c \"import anthropic._auth; print\\(dir\\(anthropic._auth\\)\\)\")",
+      "Bash(python -c \"import pkg_resources; print\\(pkg_resources.get_distribution\\('anthropic'\\).version\\)\")",
+      "Bash(python *)",
+      "Bash(openkb --version)",
+      "Bash(export PATH=\"$PATH:/c/Users/hiroshi_takizawa/AppData/Roaming/Python/Python313/Scripts\")",
+      "Bash(openkb status *)",
+      "Bash(railway *)",
+      "Bash(curl -L -o \"C:/Users/hiroshi_takizawa/Claude-Master-Folder/tweet1.jpg\" \"https://pbs.twimg.com/media/HHIJL9QbIAA0DOc?format=jpg&name=900x900\" -s)",
+      "Bash(xargs grep -l \"FEDERATION\\\\|SERVICE_ACCOUNT\\\\|ORGANIZATION\\\\|IDENTITY_TOKEN\")",
+      "Bash(dir C:\\\\Users\\\\hiroshi_takizawa\\\\hermes-kanban *)",
+      "Bash(npm --version)",
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "Bash(wsl --list --verbose)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(npx eslint *)",
+      "Bash(npx vitest *)"
+    ]
+  }
+}

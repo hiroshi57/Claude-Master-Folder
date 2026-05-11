@@ -1,0 +1,49 @@
+name: Update Wiki
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'raw/**'          # raw/ にファイルが追加・更新されたときだけ起動
+
+permissions:
+  id-token: write         # GitHub OIDC トークン取得に必須
+  contents: write         # wiki/ の変更をコミット & push するために必要
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: OpenKB をインストール
+        run: pip install openkb
+
+      - name: GitHub OIDC トークンを取得して WIF 認証
+        run: |
+          OIDC_TOKEN=$(curl -sSL \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api.anthropic.com" \
+            | python -c "import sys,json; print(json.load(sys.stdin)['value'])")
+          echo "$OIDC_TOKEN" > /tmp/oidc_token
+          echo "ANTHROPIC_IDENTITY_TOKEN_FILE=/tmp/oidc_token" >> $GITHUB_ENV
+
+      - name: Wiki を更新
+        env:
+          ANTHROPIC_FEDERATION_RULE_ID: ${{ secrets.ANTHROPIC_FEDERATION_RULE_ID }}
+          ANTHROPIC_ORGANIZATION_ID: ${{ secrets.ANTHROPIC_ORGANIZATION_ID }}
+          ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ secrets.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+        run: |
+          openkb add raw/
+
+      - name: wiki/ の変更をコミット & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add wiki/
+          git diff --staged --quiet || git commit -m "chore: wiki を自動更新 [skip ci]"
+          git push

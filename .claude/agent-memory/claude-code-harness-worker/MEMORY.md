@@ -1,0 +1,1 @@
+- [GitHub security cleanup (2026-05-07)](project_github_security_cleanup.md) — 全69リポジトリ監査・8件修正（バイオメトリクスDB・credentials・ローカルパス等を git 履歴ごと削除）
