@@ -1,88 +1,159 @@
+# How to Build Your Second Brain
+> Source: @NickSpisak_ on X (Twitter)
+> Date ingested: 2026-05-11
+
+@karpathy dropped a post describing how he uses AI to build personal knowledge bases.
+The idea is simple: instead of keeping notes scattered across apps, you dump everything into one folder. Then you tell your AI to organize all of it into a personal wiki - summaries, connections, articles - that gets smarter every time you use it.
+No special software. No database. Just folders and text files.
+
+In under 7 minutes you'll learn:
+- The exact folder structure to set up (takes 2 minutes)
+- How to automate web scraping into your knowledge base with one CLI tool
+- The one-file "schema" that makes the whole system work
+- How to get your AI to compile raw notes into an organized wiki
+- The compounding trick that makes it smarter every time you use it
+- The health check that catches mistakes before they pile up
+
+Follow @NickSpisak_ for practitioner-level AI implementation and Claude Code architecture content.
+
 ---
-title: Nick Spisak — How to Build Your Second Brain
-type: source
-tags: [第二脳, 実践ガイド, agent-browser, ヘルスチェック, Karpathy]
-sources: [nick-spisak-second-brain.md]
-updated: 2026-05-11
----
 
-# Nick Spisak — How to Build Your Second Brain
+## 1. Create Three Folders (2 Minutes)
 
-## 概要
-@NickSpisak_ による Karpathy LLM Knowledge Base の実践的な 8 ステップ実装ガイド。
-Karpathy が示した設計原則を「今日から始められる手順」に落とし込み、
-`agent-browser` による自動収集と月次ヘルスチェックを加えた実用版。
+Open your terminal or file explorer. Create a project folder anywhere on your computer. Inside it, create three subfolders:
 
----
-
-## 8 ステップ要約
-
-### Step 1: 3 つのフォルダを作る（2分）
 ```
 my-knowledge-base/
-  raw/      ← ソース素材（AI が整理する）
-  wiki/     ← AI が構造化する場所
-  outputs/  ← AI が生成した回答・レポート
+  raw/          (your source material - articles, notes, screenshots)
+  wiki/         (where your AI will write the organized version)
+  outputs/      (answers, reports, and research your AI generates)
 ```
-アプリ不要。アカウント不要。フォルダ 3 つだけ。
 
-### Step 2: raw/ を埋める（10分）
-- 記事・ノート・スクショ・議事録・論文・ブックマーク — とにかく全部
-- 整理しない。リネームしない。クリーンにしない。**それは AI の仕事**
-- Nick は 17 個の raw ファイルを X コンテンツパイプラインで運用中
+That's it. This is the same structure @karpathy uses. The raw/ folder is your junk drawer of source material. The wiki/ folder is where the AI turns that mess into something organized. The outputs/ folder is where answers to your questions live.
+No apps to install. No accounts to create. Three folders.
 
-### Step 3: agent-browser で収集を自動化（任意）
-→ [[concepts/agent-browser]] 参照
+## 2. Fill Your Raw Folder (10 Minutes)
 
-### Step 4: Schema ファイル（CLAUDE.md）を書く（5分）
-- `CLAUDE.md` または `AGENTS.md` または `README.md`（名前は問わない）
-- Karpathy: *"super simple and flat"* — DB 不要、プラグイン不要、テキストだけ
-- AI への指示書。プロジェクトごとの CLAUDE.md と同じ概念
+This is where most people stall. They create the folders and then stare at an empty raw/ directory wondering what to put in it.
 
-### Step 5: AI に Wiki を構築させる（15分）
+The answer: everything. Copy-paste articles into .md or .txt files. Save screenshots or diagrams as images. Export notes from whatever app you use now. Paste in meeting notes, research papers, project docs. Dump in bookmarks you've been hoarding for months.
+
+Don't organize it. Don't rename anything. Don't clean it up. That's the AI's job.
+
+I keep 17 raw source files across my X content pipeline - clipped articles, competitor breakdowns, analytics reports. None of it is organized by hand.
+
+But Karpathy didn't mention the part that actually speeds this up: automated collection.
+
+## 3. Automate Source Collection With Agent Browser (Optional But Powerful)
+
+Vercel Labs just shipped agent-browser - a free CLI tool that lets your AI agent control a real browser. 26K+ GitHub stars. Two commands to install:
+
+```bash
+npm install -g agent-browser
+agent-browser install
 ```
-"Read everything in raw/. Then compile a wiki in wiki/ 
-following the rules in CLAUDE.md..."
-```
-- 完成すると wiki/ にトピック別 .md が揃い、INDEX.md で検索可能になる
-- **wiki は手で編集しない**。読む専用、書くのは AI
 
-### Step 6: 質問して答えを保存する（継続）
-- 「wiki/ の内容から、自分の理解のギャップを 3 つ挙げて」
-- 「Source A と Source B の [概念] に関する見解の違いは？」
-- **答えは outputs/ に保存、または wiki に反映** → 質問するたびに賢くなる
+That second command downloads a dedicated Chrome browser. Now your AI can scrape any webpage, extract the text, and save it directly into your raw/ folder.
 
-### Step 7: 月次ヘルスチェック（重要）
-```
-"wiki/ 全体をレビューして。矛盾を検出、説明のないトピックを発見、
-ソースに裏付けのないクレームを列挙、欠落している記事を 3 件提案して"
-```
-> **@HFloyd の警告**: *"outputs を保存すると、エラーも複利になる"*
-> 誤った内容が wiki に保存されると次の回答がその誤りの上に構築される。
-> 月次チェックで修正しなければエラーが雪だるま式に蓄積する。
+Here's what that looks like in practice:
 
-### Step 8: Obsidian は必須ではない
-- Karpathy: *"ただのネストした .md ファイル群"*
-- Claude Code / VS Code / Obsidian / Notepad — AI はどれでもよい
-- **重要なのはフォルダ構造とスキーマ** — ツールではない
-- Obsidian に 47 プラグインは「Notion トラップ」と同じ
+```bash
+agent-browser open https://some-article-you-want.com
+agent-browser get text "article"
+```
+
+That's it. The AI opens the page, grabs the article text, and you pipe it into a file in raw/. No manual copy-paste. No browser extensions.
+
+Agent-browser handles pages that copy-paste can't touch. JavaScript-heavy sites that load content dynamically. Pages behind logins. Research papers with interactive figures. Anything that requires scrolling, clicking "load more," or navigating through menus before the content appears.
+
+The tool uses 82% fewer tokens than Playwright MCP, which means your AI agent can scrape 5-6x more pages within the same session. I use it to pull competitor articles, trending threads, and research docs directly into my pipeline without ever opening a browser myself.
+
+For your knowledge base, the workflow is simple: find an article you want, tell your AI "scrape this URL and save it to raw/", and agent-browser handles the rest. Your raw/ folder fills itself.
+
+## 4. Write Your Schema File (5 Minutes)
+
+This is the part most people will skip. Don't.
+
+Create a file in the root of your project called CLAUDE.md (or AGENTS.md or README.md - the name doesn't matter, the content does). This file tells your AI what the knowledge base is about and how to organize it.
+
+Here's a starter template you can copy right now:
+
+```markdown
+# Knowledge Base Schema
+
+## What This Is
+A personal knowledge base about [YOUR TOPIC].
+
+## How It's Organized
+- raw/ contains unprocessed source material. Never modify these files.
+- wiki/ contains the organized wiki. AI maintains this entirely.
+- outputs/ contains generated reports, answers, and analyses.
+
+## Wiki Rules
+- Every topic gets its own .md file in wiki/
+- Every wiki file starts with a one-paragraph summary
+- Link related topics to each other using [[topic-name]] format
+- Maintain an INDEX.md in wiki/ that lists every topic with a one-line description
+- When new raw sources are added, update the relevant wiki articles
+
+## My Interests
+[List 3-5 things you want this knowledge base to focus on]
+```
+
+@karpathy confirmed he keeps his schema "super simple and flat" in an AGENTS.md file. No database. No plugin. Just a text file that tells the AI the rules.
+
+This is the equivalent of what I use CLAUDE.md for across every project. It's the AI's instruction manual for your specific knowledge base.
+
+## 5. Tell Your AI to Compile the Wiki (15 Minutes)
+
+Open Claude Code (or Cursor, or any AI coding tool that can read your files). Point it at your project folder and say:
+
+"Read everything in raw/. Then compile a wiki in wiki/ following the rules in CLAUDE.md. Create an INDEX.md first, then create one .md file per major topic. Link related topics. Summarize every source."
+
+Then step away. Let it work.
+
+When it's done, you'll have a wiki/ folder full of organized articles - connections you didn't see, summaries of things you forgot you saved, and an index file that makes everything searchable in seconds.
+
+The important thing: you don't edit the wiki by hand. That's the AI's job. You read it, you ask questions against it, and the AI keeps it updated.
+
+## 6. Ask Questions and Save the Answers (Ongoing)
+
+Once your wiki has 10+ articles, start asking questions:
+
+- "Based on everything in wiki/, what are the three biggest gaps in my understanding of [topic]?"
+- "Compare what source A says about [concept] vs what source B says. Where do they disagree?"
+- "Write me a 500-word briefing on [topic] using only what's in this knowledge base."
+
+The AI reads across your entire wiki and gives you answers grounded in your own collected material.
+
+Save those answers back into the knowledge base. Drop the output into outputs/ or have the AI update the relevant wiki article with the new insight. Every question makes the next answer better. That's the loop.
+
+## 7. Run a Health Check (Monthly)
+
+Tell your AI:
+
+"Review the entire wiki/ directory. Flag any contradictions between articles. Find topics mentioned but never explained. List any claims that aren't backed by a source in raw/. Suggest 3 new articles that would fill gaps."
+
+One of the best replies to Karpathy's post came from @HFloyd: "When outputs get filed back, errors compound too." That's real. If the AI writes something slightly wrong and you save it back, the next answer builds on that wrong thing.
+
+The fix is simple: run periodic health checks.
+
+## 8. You Don't Need Obsidian (But You Can Use It)
+
+Half the replies to Karpathy's post were people pitching Obsidian plugins. Lex Fridman uses Obsidian + Cursor. There are already three startups building dedicated tools for this.
+
+But here's what Karpathy actually said when someone asked about his setup: "I'm trying to keep it super simple and flat. It's just a nested directory of .md files."
+
+A folder of text files and a schema file is the entire product.
+
+I run my whole knowledge system from the terminal with Claude Code. You could use VS Code. You could use Obsidian. You could use Notepad. The AI doesn't care what app you open the files in. What matters is the folder structure and the schema.
+
+Obsidian with 47 plugins is the Notion trap all over again. You spend more time configuring the tool than using the knowledge base. Flat files and a good schema will outperform a fancy tool stack 90% of the time. I've watched it happen across dozens of client setups.
+
+Stop shopping for the perfect tool. Start building.
 
 ---
 
-## キーインサイト
+*That's the full system. Three folders, one schema file, a browser scraper, and an AI that maintains everything.*
 
-| インサイト | 出典 |
-|-----------|------|
-| 3 フォルダ構造（raw / wiki / outputs） | Nick Spisak |
-| agent-browser で raw/ を自動充填 | Nick Spisak |
-| エラーの複利リスク → 月次ヘルスチェック | @HFloyd (via Nick) |
-| "super simple and flat" が最強 | Karpathy (Nick 引用) |
-
----
-
-## 関連ページ
-- [[concepts/llm-knowledge-base]]
-- [[concepts/agent-browser]]
-- [[entities/nick-spisak]]
-- [[entities/andrej-karpathy]]
-- [[sources/karpathy-llm-knowledge-base]]
+*Want to skip the manual setup? Grab the free LLM Knowledge Base skill that scaffolds the entire system in 60 seconds: https://return-my-time.kit.com/286e11f7e6*
